@@ -21,9 +21,10 @@ steps:
       - "-c"
       - |-
         #!/bin/bash
-        gradle build
+        source gradle-build.sh
+        gradleBuild "$_REPLY_TOPIC"
 
-  - name: "us-central1-docker.pkg.dev/cloud-build-pipeline-396819/cloud-build-helper-docker/cloud-build-helper-docker:latest"
+  - name: "us-central1-docker.pkg.dev/cloud-build-pipeline-396819/gradle-java21-docker/gradle-java21-docker:latest"
     id: "Create artifact registry repository"
     entrypoint: "bash"
     dir: "${_GIT_REPOSITORY_NAME}"
@@ -33,8 +34,8 @@ steps:
       - "-c"
       - |-
         #!/bin/bash
-        source create-artifact-registry.sh
-        createArtifactRegistry "$_REPLY_TOPIC" "$_GIT_REF"
+        source create-gradle-artifact-repository.sh
+        createGradleArtifactRepository "$_REPLY_TOPIC" "$_GIT_REF"
 
   # - name: "us-central1-docker.pkg.dev/cloud-build-pipeline-396819/cloud-build-helper-docker/cloud-build-helper-docker:latest"
   #   id: "Build and push docker image"
