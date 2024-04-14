@@ -37,20 +37,20 @@ steps:
         source create-gradle-artifact-repository.sh
         createGradleArtifactRepository "$_REPLY_TOPIC" "$_GIT_REF"
 
-  # - name: "us-central1-docker.pkg.dev/cloud-build-pipeline-396819/cloud-build-helper-docker/cloud-build-helper-docker:latest"
-  #   id: "Build and push docker image"
-  #   entrypoint: "bash"
-  #   dir: "${_GIT_REPOSITORY_NAME}"
-  #   args:
-  #     - "-eEuo"
-  #     - "pipefail"
-  #     - "-c"
-  #     - |-
-  #       #!/bin/bash
-  #       source build-and-push-docker.sh
-  #       buildAndPushDocker "$_REPLY_TOPIC" "$PROJECT_ID" "$_GIT_REF"
-  #   env:
-  #     - "PROJECT_ID=$PROJECT_ID"
+  - name: "us-central1-docker.pkg.dev/cloud-build-pipeline-396819/gradle-java21-docker/gradle-java21-docker:latest"
+    id: "Build and push docker image"
+    entrypoint: "bash"
+    dir: "${_GIT_REPOSITORY_NAME}"
+    args:
+      - "-eEuo"
+      - "pipefail"
+      - "-c"
+      - |-
+        #!/bin/bash
+        source build-and-push-image.sh
+        buildAndPushImage "$_REPLY_TOPIC" "$_GIT_REF" "$PROJECT_ID"
+    env:
+      - "PROJECT_ID=$PROJECT_ID"
 
   - name: "us-central1-docker.pkg.dev/cloud-build-pipeline-396819/cloud-build-helper-docker/cloud-build-helper-docker:latest"
     id: "Reply back to pipeline"
