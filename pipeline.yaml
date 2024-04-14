@@ -1,5 +1,5 @@
 type: "cloudbuild-deploy"
 pipelineType: "pubsub"
-pipelineName: "dockerfile-deploy"
+pipelineName: "gradle-java21-deploy"
 
 
