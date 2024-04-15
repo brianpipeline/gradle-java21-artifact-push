@@ -51,6 +51,7 @@ steps:
         buildAndPushImage "$_REPLY_TOPIC" "$_GIT_REF" "$PROJECT_ID" "${BUILD_ID:0:8}"
     env:
       - "PROJECT_ID=$PROJECT_ID"
+      - "BUILD_ID=$BUILD_ID"
 
   - name: "us-central1-docker.pkg.dev/cloud-build-pipeline-396819/cloud-build-helper-docker/cloud-build-helper-docker:latest"
     id: "Reply back to pipeline"
