@@ -63,6 +63,8 @@ steps:
       - "-c"
       - |-
         #!/bin/bash
+        ls
+        yq eval '.envsToDeployTo | join(" ")' "pipeline.yaml"
         source trigger-deploy-pipelines.sh
         triggerDeployPipelines "$_GIT_REF" "$PROJECT_ID" "${BUILD_ID:0:8}" "600" "$_REPLY_TOPIC"
     env:
