@@ -54,6 +54,22 @@ steps:
       - "BUILD_ID=$BUILD_ID"
 
   - name: "us-central1-docker.pkg.dev/cloud-build-pipeline-396819/cloud-build-helper-docker/cloud-build-helper-docker:latest"
+    id: "Deploy to each environment"
+    entrypoint: "bash"
+    dir: "${_GIT_REPOSITORY_NAME}"
+    args:
+      - "-eEuo"
+      - "pipefail"
+      - "-c"
+      - |-
+        #!/bin/bash
+        source trigger-deploy-pipelines.sh
+        triggerDeployPipelines "$_GIT_REF" "$PROJECT_ID" "${BUILD_ID:0:8}" "$_REPLY_TOPIC"
+    env:
+      - "PROJECT_ID=$PROJECT_ID"
+      - "BUILD_ID=$BUILD_ID"
+
+  - name: "us-central1-docker.pkg.dev/cloud-build-pipeline-396819/cloud-build-helper-docker/cloud-build-helper-docker:latest"
     id: "Reply back to pipeline"
     entrypoint: "bash"
     args:
