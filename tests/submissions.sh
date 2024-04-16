@@ -11,7 +11,7 @@ if ! gcloud pubsub subscriptions create "$subscriptionName" --topic "$topicName"
     echo "Subscription $subscriptionName already exists"
 fi
 
-gcloud builds submit . --config cloudbuild.yaml --substitutions "_GIT_CLONE_URL=https://github.com/brianpipeline/test.git,_GIT_REPOSITORY_NAME="test",_GIT_REF="refs/heads/main",_GIT_HEAD_SHA="52e7ded4e4d852c577caad93796dd466bc13d62b",_REPLY_TOPIC=\"projects/cloud-build-pipeline-396819/topics/$topicName\"" --region=us-central1
+gcloud builds submit . --config cloudbuild.yaml --substitutions "_GIT_CLONE_URL=https://github.com/brianpipeline/test.git,_GIT_REPOSITORY_NAME="test",_GIT_REF="refs/heads/main",_GIT_HEAD_SHA="da588f8d7df2842dcd52842e147e9f6883625d4c",_REPLY_TOPIC=\"projects/cloud-build-pipeline-396819/topics/$topicName\"" --region=us-central1
 
 message=$(gcloud pubsub subscriptions pull --auto-ack "$subscriptionName" --format='value(message.data)' 2>/dev/null)
 gcloud pubsub topics delete "$topicName"
